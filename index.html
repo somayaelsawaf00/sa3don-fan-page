@@ -1,0 +1,597 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SA3DON 🐾</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --orange: #f28c45;
+  --dark-orange: #d96b2b;
+  --cream: #fff8ef;
+  --brown: #65412f;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom cat paw cursor */
+body, body * {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='36' viewBox='0 0 36 36'%3E%3Cg fill='%23f28c45' stroke='%23ffffff' stroke-width='1.2'%3E%3Cellipse cx='18' cy='23' rx='8' ry='7'/%3E%3Cellipse cx='8' cy='14' rx='4' ry='5' transform='rotate(-25 8 14)'/%3E%3Cellipse cx='15' cy='8' rx='4' ry='5'/%3E%3Cellipse cx='23' cy='8' rx='4' ry='5'/%3E%3Cellipse cx='29' cy='14' rx='4' ry='5' transform='rotate(25 29 14)'/%3E%3C/g%3E%3C/svg%3E") 18 18, auto;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  color: var(--brown);
+  text-align: center;
+  background: linear-gradient(135deg, #fff4e7, #ffe0c2, #fff8f0, #ffd9b5);
+  background-size: 300% 300%;
+  animation: backgroundMove 12s ease infinite;
+}
+
+button {
+  font-family: inherit;
+}
+
+@keyframes backgroundMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.container {
+  width: min(900px, 92%);
+  margin: auto;
+  padding: 35px 0 55px;
+}
+
+.tag {
+  display: inline-block;
+  background: white;
+  color: var(--dark-orange);
+  border: 2px dashed #f5b27f;
+  border-radius: 30px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: bold;
+  transform: rotate(-3deg);
+}
+
+h1 {
+  margin: 18px 0 5px;
+  font-size: clamp(3rem, 10vw, 6rem);
+  letter-spacing: 5px;
+  color: var(--orange);
+  text-shadow: 3px 4px 0 white, 5px 6px 0 #f6c49f;
+  animation: titleBounce 3s ease-in-out infinite;
+}
+
+@keyframes titleBounce {
+  0%, 100% { transform: translateY(0) rotate(-1deg); }
+  50% { transform: translateY(-7px) rotate(1deg); }
+}
+
+.subtitle {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.cat-photo {
+  width: min(310px, 78vw);
+  height: min(310px, 78vw);
+  object-fit: cover;
+  border-radius: 50%;
+  border: 9px solid white;
+  outline: 4px solid #f6b77f;
+  box-shadow: 0 12px 30px #b86e4140;
+  transition: transform 0.35s ease;
+}
+
+.cat-photo:hover {
+  transform: rotate(4deg) scale(1.04);
+}
+
+.photo-caption {
+  margin-top: 20px;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.card {
+  margin: 30px auto;
+  padding: 25px 20px;
+  max-width: 600px;
+  background: #ffffffc9;
+  border: 2px solid white;
+  border-radius: 28px;
+  box-shadow: 0 10px 25px #a65f3020;
+}
+
+.card h2 {
+  color: var(--dark-orange);
+  margin-top: 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.stat {
+  background: #fff0df;
+  border: 1px solid #ffd1aa;
+  border-radius: 16px;
+  padding: 12px 16px;
+  min-width: 125px;
+}
+
+.stat strong {
+  display: block;
+  font-size: 21px;
+  color: var(--dark-orange);
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 25px 0;
+}
+
+button {
+  border: none;
+  border-radius: 30px;
+  padding: 14px 22px;
+  font-size: 15px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(135deg, #f5a05c, #e77936);
+  box-shadow: 0 5px 0 #bd612b;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 0 #bd612b;
+}
+
+button:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0 #bd612b;
+}
+
+.sound-button {
+  color: var(--dark-orange);
+  background: white;
+  border: 2px solid #f6c49f;
+  box-shadow: 0 5px 0 #edcfb6;
+}
+
+.cartoon-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 210px;
+  overflow: hidden;
+}
+
+.cat {
+  position: relative;
+  width: 150px;
+  height: 125px;
+  animation: catFloat 2.5s ease-in-out infinite;
+}
+
+@keyframes catFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+.ear {
+  position: absolute;
+  top: 0;
+  width: 45px;
+  height: 50px;
+  background: white;
+  border: 3px solid #e8a36e;
+  border-radius: 60% 60% 15% 15%;
+  z-index: 0;
+}
+
+.ear.left {
+  left: 12px;
+  transform: rotate(-25deg);
+}
+
+.ear.right {
+  right: 12px;
+  transform: rotate(25deg);
+}
+
+.ear::after {
+  content: "";
+  position: absolute;
+  inset: 10px 10px 7px;
+  background: #ffb7c5;
+  border-radius: 60% 60% 15% 15%;
+}
+
+.face {
+  position: absolute;
+  top: 22px;
+  left: 0;
+  width: 150px;
+  height: 105px;
+  background: white;
+  border: 3px solid #e8a36e;
+  border-radius: 48% 48% 45% 45%;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.patch {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 65px;
+  height: 55px;
+  background: #f29a4a;
+  border-radius: 0 45px 0 35px;
+}
+
+.eye {
+  position: absolute;
+  top: 40px;
+  width: 10px;
+  height: 15px;
+  border-radius: 50%;
+  background: #503626;
+  animation: blink 4s infinite;
+}
+
+.eye.left { left: 35px; }
+.eye.right { right: 35px; }
+
+@keyframes blink {
+  0%, 45%, 48%, 100% { transform: scaleY(1); }
+  46%, 47% { transform: scaleY(0.1); }
+}
+
+.nose {
+  position: absolute;
+  top: 57px;
+  left: 68px;
+  width: 12px;
+  height: 9px;
+  background: #ee9aa9;
+  clip-path: polygon(50% 100%, 0 0, 100% 0);
+}
+
+.mouth {
+  position: absolute;
+  top: 65px;
+  left: 65px;
+  width: 20px;
+  height: 12px;
+  border-bottom: 2px solid #80523b;
+  border-radius: 50%;
+}
+
+.whiskers {
+  position: absolute;
+  top: 64px;
+  width: 30px;
+  height: 2px;
+  background: #bd9a83;
+}
+
+.whiskers.left {
+  left: 5px;
+  transform: rotate(8deg);
+}
+
+.whiskers.right {
+  right: 5px;
+  transform: rotate(-8deg);
+}
+
+.heart {
+  position: fixed;
+  pointer-events: none;
+  z-index: 10;
+  animation: heartRise 1.5s ease-out forwards;
+  font-size: 25px;
+}
+
+@keyframes heartRise {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(0.7) rotate(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-130px) scale(1.4) rotate(25deg);
+  }
+}
+
+.message {
+  min-height: 30px;
+  color: #d76f38;
+  font-size: 17px;
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+footer {
+  padding: 25px 0 5px;
+  color: #9d6b4b;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .container { padding-top: 25px; }
+  .card { padding: 22px 14px; }
+  button { padding: 12px 16px; }
+}
+</style>
+</head>
+
+<body>
+<main class="container">
+
+  <div class="tag">🐾 OFFICIAL CAT FAN CLUB 🐾</div>
+
+  <h1>SA3DON</h1>
+  <p class="subtitle">the cutest little orange-and-white menace 🍊</p>
+
+  <img class="cat-photo" src="sa3don.jpg" alt="Sa3don the cat">
+
+  <p class="photo-caption">everybody say salam to the king 👑</p>
+
+  <section class="card">
+    <h2>✨ A little about Sa3don ✨</h2>
+    <p>
+      Professional napper. Part-time troublemaker.
+      Full-time owner of everyone's heart.
+    </p>
+
+    <div class="stats">
+      <div class="stat"><strong>100%</strong>Cuteness</div>
+      <div class="stat"><strong>0</strong>Brain cells</div>
+      <div class="stat"><strong>∞</strong>Attitude</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>🐱 Meet the mini Sa3don</h2>
+
+    <div class="cartoon-area">
+      <div class="cat" id="cartoonCat">
+        <div class="ear left"></div>
+        <div class="ear right"></div>
+        <div class="face">
+          <div class="patch"></div>
+          <div class="eye left"></div>
+          <div class="eye right"></div>
+          <div class="nose"></div>
+          <div class="mouth"></div>
+          <div class="whiskers left"></div>
+          <div class="whiskers right"></div>
+        </div>
+      </div>
+    </div>
+
+    <p id="message" class="message">meow meow! pet me pls 🥺</p>
+
+    <div class="buttons">
+      <button id="petButton">💕 Pet Sa3don</button>
+      <button id="meowButton">😽 Make him meow</button>
+      <button id="purrButton">😴 Hear him purr</button>
+      <button id="soundToggle" class="sound-button">🔊 Sound: ON</button>
+    </div>
+
+    <p style="font-size:12px;color:#a47b60">
+      Tip: click a button to play the sounds 🧡
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>💌 A very important announcement</h2>
+    <p>
+      Sa3don does not pay rent, does not have a job,
+      and still somehow runs this entire household.
+    </p>
+    <p><strong>We respect the hustle.</strong> 🫡</p>
+    <button id="loveButton">Send Sa3don some love 💗</button>
+  </section>
+
+  <footer>
+    Made with love, snacks, and an unreasonable amount of cat hair.
+    <br>© SA3DON FAN CLUB 🐾
+  </footer>
+
+</main>
+
+<script>
+let soundOn = true;
+
+/*
+  Local sound files are more reliable.
+  Put meow.mp3 and purr.mp3 in the same folder as index.html.
+*/
+const meowSound = new Audio("meow.mp3");
+const purrSound = new Audio("purr.mp3");
+
+meowSound.preload = "auto";
+purrSound.preload = "auto";
+
+meowSound.volume = 1;
+purrSound.volume = 1;
+
+const message = document.getElementById("message");
+const cartoonCat = document.getElementById("cartoonCat");
+const soundToggle = document.getElementById("soundToggle");
+
+const messages = [
+  "purrrrr... you're my favorite human 💗",
+  "meow! where are my snacks? 🍗",
+  "you may pet the king. you are welcome 👑",
+  "I was sleeping. unacceptable behavior.",
+  "orange cat activities. no explanation needed 🍊",
+  "one more treat and we have a deal 🤝"
+];
+
+function playSound(sound) {
+  if (!soundOn) {
+    message.textContent = "Turn the sound on first! 🔇";
+    return;
+  }
+
+  sound.pause();
+  sound.currentTime = 0;
+
+  sound.play().catch(() => {
+    message.textContent =
+      "Can't find the sound file! Check meow.mp3 and purr.mp3 🐾";
+  });
+}
+
+function playMeow() {
+  playSound(meowSound);
+}
+
+function playPurr() {
+  playSound(purrSound);
+}
+
+function makeHeart(x, y) {
+  const heart = document.createElement("span");
+  heart.className = "heart";
+
+  const options = ["💗", "🧡", "💕", "🐾", "✨"];
+  heart.textContent = options[Math.floor(Math.random() * options.length)];
+
+  heart.style.left = x + "px";
+  heart.style.top = y + "px";
+
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 1600);
+}
+
+function heartBurst(count = 8) {
+  const rect = cartoonCat.getBoundingClientRect();
+
+  for (let i = 0; i < count; i++) {
+    setTimeout(() => {
+      makeHeart(
+        rect.left + Math.random() * rect.width,
+        rect.top + Math.random() * rect.height
+      );
+    }, i * 90);
+  }
+}
+
+function petCat() {
+  message.textContent =
+    messages[Math.floor(Math.random() * messages.length)];
+
+  cartoonCat.animate(
+    [
+      { transform: "scale(1) rotate(0deg)" },
+      { transform: "scale(1.1) rotate(-5deg)" },
+      { transform: "scale(0.96) rotate(5deg)" },
+      { transform: "scale(1) rotate(0deg)" }
+    ],
+    { duration: 450, easing: "ease-in-out" }
+  );
+
+  heartBurst(7);
+  playPurr();
+}
+
+document.getElementById("petButton").addEventListener("click", petCat);
+
+document.getElementById("meowButton").addEventListener("click", () => {
+  message.textContent = "MEEEOOOWWW! 😼";
+  playMeow();
+  heartBurst(4);
+});
+
+document.getElementById("purrButton").addEventListener("click", () => {
+  message.textContent = "purrrrrrrrr... 😴🧡";
+  playPurr();
+  heartBurst(3);
+});
+
+document.getElementById("loveButton").addEventListener("click", () => {
+  message.textContent =
+    "SA3DON ACCEPTS YOUR LOVE. NOW HAND OVER THE TREATS. 💗";
+
+  heartBurst(15);
+  playMeow();
+});
+
+soundToggle.addEventListener("click", () => {
+  soundOn = !soundOn;
+
+  if (!soundOn) {
+    meowSound.pause();
+    purrSound.pause();
+  }
+
+  soundToggle.textContent = soundOn
+    ? "🔊 Sound: ON"
+    : "🔇 Sound: OFF";
+
+  message.textContent = soundOn
+    ? "Sound is back! meow meow 🐾"
+    : "Shhh... Sa3don is in silent mode 🤫";
+});
+
+cartoonCat.addEventListener("click", (event) => {
+  petCat();
+  makeHeart(event.clientX, event.clientY);
+});
+
+/* Floating paws */
+setInterval(() => {
+  if (Math.random() > 0.55) {
+    const paw = document.createElement("div");
+
+    paw.textContent = "🐾";
+    paw.style.position = "fixed";
+    paw.style.left = Math.random() * 95 + "vw";
+    paw.style.bottom = "-30px";
+    paw.style.fontSize = "20px";
+    paw.style.opacity = "0.45";
+    paw.style.pointerEvents = "none";
+    paw.style.zIndex = "0";
+    paw.style.transition = "transform 5s linear, opacity 5s";
+
+    document.body.appendChild(paw);
+
+    requestAnimationFrame(() => {
+      paw.style.transform = "translateY(-110vh) rotate(180deg)";
+      paw.style.opacity = "0";
+    });
+
+    setTimeout(() => paw.remove(), 5200);
+  }
+}, 1200);
+</script>
+
+</body>
+</html>
